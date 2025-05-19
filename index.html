@@ -148,7 +148,7 @@
         
         // Initial load and lazy loading variables
         const initialLoad = 35;
-        const loadMoreCount = 35;
+        const loadMoreCount = 25;
         let currentlyLoaded = 0;
         let allImages = [];
         let isLoading = false;
@@ -195,7 +195,7 @@
                 console.log("Fetching images from manifest...");
                 
                 // Fetch the manifest file
-                const response = await fetch('../assets/images/manifest.json');
+                const response = await fetch('assets/images/manifest.json');
                 if (!response.ok) {
                     throw new Error('Failed to fetch manifest file');
                 }
@@ -220,7 +220,7 @@
                 console.log("Falling back to direct image checking...");
                 const directoryPath = 'assets/images/';
                 const images = [];
-                const totalToCheck = 37; // Total Check Images
+                const totalToCheck = 179; // Total Check Images
                 
                 for (let i = 1; i <= totalToCheck; i++) {
                     const imgPath = `${directoryPath}ecchi-${i}.webp`;
