@@ -16,9 +16,33 @@
 	  gtag('config', 'G-W9NET4NH9D');
 	</script>
 	
+    <!-- Age verification styles moved to external CSS file -->
 </head>
 <body>
-    <div class="container">
+    <!-- Age verification overlay -->
+    <div class="age-verification" id="ageVerification">
+        <div class="age-container">
+            <div class="age-content">
+                <div class="age-title">You Must Be Above 18+</div>
+                <button class="age-button" id="ageConfirmButton">Yes, I'm 18+</button>
+            </div>
+            <div class="age-image" id="ageVerificationImage"></div>
+        </div>
+    </div>
+
+    <!-- Second verification screen -->
+    <div class="age-verification" id="secondVerification" style="display: none;">
+        <div class="age-container">
+            <div class="age-content">
+                <div class="age-title">Trang này chủ yếu dành cho những đứa yêu Loli</div>
+                <div class="age-subtitle">Trang có quảng cáo, nhấn quảng cáo vài lần là hết. Đừng cố gắng sống chó. Vì trang cần kinh phí để duy trì !!</div>
+                <button class="age-button" id="secondConfirmButton">Yes, đã hiểu !! (<span id="countdown">5</span>s)</button>
+            </div>
+            <div class="age-image" id="secondVerificationImage"></div>
+        </div>
+    </div>
+
+    <div class="container content-hidden" id="mainContent">
         <nav>
             <a href="https://animemestation.vercel.app/">Home</a>
             <a href="https://animemestation.vercel.app/pages/truyen-tranh.html">Comics</a>
@@ -47,8 +71,8 @@
         </div>
     </div>
 
-	<script type='text/javascript' src='//snailthreatenedinvited.com/1c/33/bd/1c33bd228505b0ef848c24e9c207161a.js'></script>
-    <script type='text/javascript' src='//snailthreatenedinvited.com/e4/21/78/e4217850158c395ccba4702b67b767a6.js'></script>
+	<script type='text/javascript' src='//snailthreatenedinvited.com/43/af/0c/43af0c0d17fe9e9e21474eb4100b311b.js'></script>
+    <script type='text/javascript' src='//snailthreatenedinvited.com/94/72/92/947292bfefe2ea0786a870c82501d2cd.js'></script>
 	
     <button class="back-to-top" id="backToTop">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -124,6 +148,90 @@
     </div>
 
     <script>
+        // Age verification functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const ageVerification = document.getElementById('ageVerification');
+            const secondVerification = document.getElementById('secondVerification');
+            const mainContent = document.getElementById('mainContent');
+            const ageConfirmButton = document.getElementById('ageConfirmButton');
+            const secondConfirmButton = document.getElementById('secondConfirmButton');
+            const ageVerificationImage = document.getElementById('ageVerificationImage');
+            const secondVerificationImage = document.getElementById('secondVerificationImage');
+            const countdownElement = document.getElementById('countdown');
+            
+            // Set random welcome image (1-6)
+            const randomImageNumber = Math.floor(Math.random() * 6) + 1;
+            ageVerificationImage.style.backgroundImage = `url('assets/welcome_${randomImageNumber}.webp')`;
+            secondVerificationImage.style.backgroundImage = `url('assets/welcome_${randomImageNumber}.webp')`;
+            
+            // Remove localStorage check - always show verification screens
+            
+            // Handle first age confirmation
+            ageConfirmButton.addEventListener('click', function() {
+                // Hide first verification and show second verification
+                ageVerification.style.animation = 'fadeOut 0.5s ease-in-out forwards';
+                
+                setTimeout(() => {
+                    ageVerification.style.display = 'none';
+                    secondVerification.style.display = 'flex'; // Changed from 'block' to 'flex' for proper centering
+                    secondVerification.style.animation = 'fadeIn 0.5s ease-in-out forwards';
+                    
+                    // Start countdown
+                    let countdown = 5;
+                    countdownElement.textContent = countdown;
+                    secondConfirmButton.disabled = true;
+                    
+                    const countdownInterval = setInterval(() => {
+                        countdown--;
+                        countdownElement.textContent = countdown;
+                        
+                        if (countdown <= 0) {
+                            clearInterval(countdownInterval);
+                            secondConfirmButton.disabled = false;
+                        }
+                    }, 1000);
+                }, 500);
+            });
+            
+            // Handle second confirmation
+            secondConfirmButton.addEventListener('click', function() {
+                if (this.disabled) return;
+                
+                // Set animation for hiding verification
+                secondVerification.style.animation = 'fadeOut 0.5s ease-in-out forwards';
+                
+                // After animation completes, hide verification and show content
+                setTimeout(() => {
+                    secondVerification.style.display = 'none';
+                    mainContent.classList.remove('content-hidden');
+                    mainContent.classList.add('content-visible');
+                    
+                    // Removed localStorage.setItem line
+                }, 500);
+            });
+            
+            // Back to top button functionality
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            // Show back-to-top button when scrolling down
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            // Scroll to top when button is clicked
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Your existing JavaScript code below
         // Gallery elements
         const gallery = document.getElementById('gallery');
         const loadMoreText = document.getElementById('loadMoreText');
@@ -220,7 +328,7 @@
                 console.log("Falling back to direct image checking...");
                 const directoryPath = 'assets/images/';
                 const images = [];
-                const totalToCheck = 179; // Total Check Images
+                const totalToCheck = 210; // Total Check Images
                 
                 for (let i = 1; i <= totalToCheck; i++) {
                     const imgPath = `${directoryPath}ecchi-${i}.webp`;
@@ -487,7 +595,7 @@
                     loadMoreCounter++;
                     
                     // Show ads at specific load more counts
-                    if (loadMoreCounter === 4) {
+                    if (loadMoreCounter === 9) {
                         showAdPopup();
                     }
                     
@@ -537,33 +645,43 @@
                 }
             });
             
-            // Add specific handler for iframe clicks
-            window.addEventListener('message', function(event) {
-                // Try to handle messages from iframes indicating clicks
-                if (event.data && typeof event.data === 'string' && 
-                    (event.data.includes('click') || event.data.includes('ad'))) {
-                    closePopup();
+            // Add click event for load more button
+            const loadMoreButton = document.getElementById('loadMoreButton');
+            loadMoreButton.addEventListener('click', function() {
+                if (currentlyLoaded < allImages.length && !isLoading) {
+                    loadImages(loadMoreCount);
+                    
+                    // Increment load more counter
+                    loadMoreCounter++;
+                    
+                    // Show ads at specific load more counts
+                    if (loadMoreCounter === 9) {
+                        showAdPopup();
+                    }
+                    
+                    // Hide button if all images are loaded
+                    if (currentlyLoaded >= allImages.length) {
+                        loadMoreButton.style.display = 'none';
+                    }
                 }
             });
             
-            // Back to top button functionality
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
-                if (scrollTop > 500) {
-                    backToTopBtn.classList.add('show');
-                } else {
-                    backToTopBtn.classList.remove('show');
+            // Add click event for gallery images to open lightbox
+            gallery.addEventListener('click', function(e) {
+                const clickedItem = e.target.closest('.masonry-item');
+                if (clickedItem && e.target.tagName === 'IMG') {
+                    openLightbox(e.target.src);
                 }
             });
             
-            // Add click event for back to top button
-            backToTopBtn.addEventListener('click', function() {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+            // Add click events for lightbox closing
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeLightbox();
+                }
             });
+            
+            closeButton.addEventListener('click', closeLightbox);
         });
     </script>
 </body>
